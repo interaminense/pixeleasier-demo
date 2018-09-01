@@ -1,0 +1,15 @@
+{
+	"presets": [
+		"env",
+		"metal-jsx"
+	],
+	"plugins": [
+		"transform-decorators-legacy",
+		["prismjs", {
+			"languages": ["javascript", "css", "markup", "html"],
+			"plugins": ["line-numbers"],
+			"theme": "twilight",
+			"css": true
+		}]
+	]
+}
