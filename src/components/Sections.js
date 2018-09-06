@@ -9,12 +9,13 @@ class Sections extends Component {
 	render() {
 		const {items} = this.props;
 
-		return items.map(({backgroundColor, draw, title, selected}) => (
+		return items.map(({backgroundColor, draw, title, selected, size}) => (
 			<Section
 				backgroundColor={backgroundColor}
 				draw={draw}
 				title={title}
 				selected={selected}
+				size={size}
 			/>
 		));
 	}
@@ -43,8 +44,6 @@ class Section extends Component {
 
 		this.state.selected = type;
 		this.setDraw(type);
-
-
 	}
 
 	renderTitle() {
@@ -106,7 +105,9 @@ Section.PROPS = {
 
 	title: Config.string(),
 
-	selected: Config.string().value('SVG')
+	selected: Config.string().value('SVG'),
+
+	size: Config.number()
 }
 
 Section.STATE = {
