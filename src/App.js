@@ -1,6 +1,6 @@
 import Component from 'metal-jsx';
 import Sections from './components/Sections';
-import {finnAndJakeDraw, steveJobsDraw, robotCopDraw, batmanDraw, finnDraw} from './drawings';
+import {finnAndJakeDraw, steveJobsDraw, robotCopDraw, batmanDraw, finnDraw, vaderDraw} from './drawings';
 import './style/main.scss';
 import './style/prism.scss';
 
@@ -8,27 +8,38 @@ const items = [
 	{
 		backgroundColor: 'rgb(233, 30, 99)',
 		title: 'Finn & Jake',
-		draw: finnAndJakeDraw
+		draw: finnAndJakeDraw,
+		size: 8
 	},
 	{
 		backgroundColor: 'rgb(113, 138, 158)',
 		title: 'Steve Jobs',
-		draw: steveJobsDraw
+		draw: steveJobsDraw,
+		size: 8
 	},
 	{
 		backgroundColor: 'rgb(72, 87, 121)',
 		title: 'Batman',
-		draw: batmanDraw
+		draw: batmanDraw,
+		size: 8
 	},
 	{
 		backgroundColor: 'rgb(132, 119, 108)',
 		title: 'Robot Cop',
-		draw: robotCopDraw
+		draw: robotCopDraw,
+		size: 8
 	},
 	{
 		backgroundColor: 'rgb(117, 214, 74)',
 		title: 'Finn',
-		draw: finnDraw
+		draw: finnDraw,
+		size: 8
+	},
+	{
+		backgroundColor: 'rgb(152, 144, 162)',
+		title: 'Darth Vader',
+		draw: vaderDraw,
+		size: 8
 	}
 ];
 
