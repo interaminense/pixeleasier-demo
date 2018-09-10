@@ -1,7 +1,7 @@
 
 import Component, {Config, DangerouslySetHTML} from 'metal-jsx';
 import {prefix} from '../utils/constants';
-import {renderToString, renderCode} from '../utils';
+import {convertDrawToString, getCode} from '../utils';
 
 const CLASSNAME = `${prefix}-section`;
 
@@ -9,12 +9,12 @@ class Sections extends Component {
 	render() {
 		const {items} = this.props;
 
-		return items.map(({backgroundColor, draw, title, selected, size}) => (
+		return items.map(({backgroundColor, draw, title, size}) => (
 			<Section
 				backgroundColor={backgroundColor}
 				draw={draw}
 				title={title}
-				selected={selected}
+				typeSelected={'CSS'}
 				size={size}
 			/>
 		));
@@ -27,23 +27,20 @@ Sections.PROPS = {
 
 class Section extends Component {
 	created() {
-		this.setDraw('SVG');
-	}
+		const {draw, size, typeSelected} = this.props;
+		const drawString = convertDrawToString(draw, 'CSS', size);
 
-	setDraw(type) {
-		const {draw} = this.props;
-		const drawString = renderToString(draw, type);
-		const codeString = renderCode(drawString);
-
-		this.state.drawString = drawString;
-		this.state.code = codeString;
+		this.setState({typeSelected, drawString});
 	}
 
 	handleClick({target}) {
 		const type = target.innerText.toUpperCase();
 
-		this.state.selected = type;
-		this.setDraw(type);
+		this.state.typeSelected = type;
+	}
+
+	handleClickShowCode() {
+		this.state.showCode = !this.state.showCode;
 	}
 
 	renderTitle() {
@@ -52,46 +49,53 @@ class Section extends Component {
 		return <h1 class={`${CLASSNAME}-title`} style={`background-color: ${backgroundColor}`}>{title}</h1>;
 	}
 
+	renderCode() {
+		const {draw} = this.props;
+		const drawString = convertDrawToString(draw, 'CSS');
+
+		if (!this.code) {
+			this.code = getCode(drawString);
+		}
+
+		return (
+			<pre class="language-markup">
+				<DangerouslySetHTML elementClasses={`${CLASSNAME}-code`} content={this.code} />
+			</pre>
+		);
+	}
+
 	renderDraw() {
 		const {drawString} = this.state;
 
 		return <DangerouslySetHTML elementClasses={`${CLASSNAME}-draw`} content={drawString} />;
 	}
 
-	renderCode() {
-		const {code} = this.state;
-
-		return (
-			<pre class="language-markup">
-				<DangerouslySetHTML elementClasses={`${CLASSNAME}-code`} content={code} />
-			</pre>
-		);
-	}
-
 	renderTabs() {
-		const {selected} = this.state;
+		const {typeSelected} = this.state;
 
 		return (
 			<ul onClick={this.handleClick.bind(this)} class={`${CLASSNAME}-tabs`}>
-				<li class={selected == 'HTML' && 'selected'}>{'html'}</li>
-				<li class={selected == 'CSS' && 'selected'}>{'css'}</li>
-				<li class={selected == 'SVG' && 'selected'}>{'svg'}</li>
+				<li class={typeSelected == 'HTML' && 'selected'}>{'html'}</li>
+				<li class={typeSelected == 'CSS' && 'selected'}>{'css'}</li>
+				<li class={typeSelected == 'SVG' && 'selected'}>{'svg'}</li>
 			</ul>
 		);
 	}
 
 	render() {
 		const {backgroundColor} = this.props;
+		const {showCode} = this.state;
 
 		return (
 			<section class={CLASSNAME} style={`background-color: ${backgroundColor}`}>
 				{this.renderTitle()}
 				<div class={`${CLASSNAME}-flex`}>
 					{this.renderDraw()}
-					<div class={`${CLASSNAME}-content-code`}>
+					{/* {showCode && <div class={`${CLASSNAME}-content-code`}>
 						{this.renderTabs()}
 						{this.renderCode()}
-					</div>
+					</div>}
+					<button data-onclick={this.handleClickShowCode.bind(this)}>{'show code'}</button> */}
 				</div>
 			</section>
 		);
@@ -105,15 +109,17 @@ Section.PROPS = {
 
 	title: Config.string(),
 
-	selected: Config.string().value('SVG'),
+	typeSelected: Config.string(),
 
 	size: Config.number()
 }
 
 Section.STATE = {
-	code: Config.string(),
+	typeSelected: Config.string(),
 
-	drawString: Config.string()
+	drawString: Config.string(),
+
+	showCode: Config.bool().value(false)
 }
 
 export default Sections;

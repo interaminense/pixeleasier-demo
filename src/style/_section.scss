@@ -32,12 +32,15 @@ $c: '.#{$prefix}-section';
 
 	&-title {
 		text-align: center;
-		font-size: 3rem;
-		color: rgba(0, 0, 0, 1);
+		font-size: 2rem;
+		color: black;
 		position: sticky;
 		top: 0;
 		width: 100%;
-		opacity: 0.6;
+		opacity: 1;
+		z-index: 1;
+		text-transform: uppercase;
+		padding: 1rem;
 	}
 
 	&-flex {
@@ -46,11 +49,10 @@ $c: '.#{$prefix}-section';
 		justify-content: center;
 	}
 
-	&-draw {
-		margin-right: 6rem;
-	}
+	&-draw {}
 
 	&-content-code {
+		margin-right: 6rem;
 		box-shadow: 10px 10px 30px -10px rgba(0, 0, 0, 0.5);
 	}
 
@@ -60,7 +62,7 @@ $c: '.#{$prefix}-section';
 	}
 
 	pre[class*="language-"] {
-		width: 600px;
+		width: 400px;
 		overflow: auto;
 		height: 250px;
 		border-radius: 0 0 5px 5px;
