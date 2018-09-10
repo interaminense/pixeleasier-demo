@@ -1,6 +1,6 @@
 import {Pixeleasier as PixeleasierHTML, PixeleasierCSS, PixeleasierSVG} from 'pixeleasier';
 
-const renderToString = (draw, type = 'HTML', size = 8) => {
+const convertDrawToString = (draw, type = 'HTML', size = 8) => {
 	let object;
 
 	if (type === 'CSS') {
@@ -14,4 +14,4 @@ const renderToString = (draw, type = 'HTML', size = 8) => {
 	return object.render().outerHTML;
 }
 
-export default renderToString;
+export default convertDrawToString;

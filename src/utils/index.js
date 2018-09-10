@@ -1,4 +1,4 @@
-import renderToString from './renderToString';
-import renderCode from './renderCode';
+import convertDrawToString from './convertDrawToString';
+import getCode from './getCode';
 
-export {renderToString, renderCode};
+export {convertDrawToString, getCode};
